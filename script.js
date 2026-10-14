@@ -1,10 +1,25 @@
 const canvas = document.getElementById("firstCanvas");
 const context = canvas.getContext('2d');
+const color = document.getElementById("colorPicker");
+const brush = document.getElementById("brushSize");
+const displayBrush = document.getElementById("displaySize");
+
+let currentColor = 0o0;
+let currentBrushSize = 5;
+let displaySize = 5;
 
 let isDrawing = false;
 let x = 0;
 let y = 0;
 
+color.addEventListener("input", (e)=>{
+    currentColor = e.target.value;
+})
+
+brush.addEventListener("input", (e)=>{
+    currentBrushSize = e.target.value;
+    displayBrush.textContent = e.target.value;
+})
 
 firstCanvas.addEventListener("mousedown", (e) => {
     x = e.offsetX;
@@ -31,11 +46,13 @@ window.addEventListener("mouseup", (e) => {
 
 function drawLine(context, x1, y1, x2, y2){
     context.beginPath();
-    context.strokeStyle = "pink";
-    context.lineWidth = 3;
+    context.strokeStyle = currentColor;
+    context.lineWidth = currentBrushSize;
     context.moveTo(x1, y1);
     context.lineTo(x2, y2);
     context.stroke();
     context.closePath();
+    context.lineCap = "round";
+  
 }
 
